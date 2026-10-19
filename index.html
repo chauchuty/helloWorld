@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Pixel Art</title>
+  <title>Login - Super Mario World</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -19,107 +19,191 @@
       min-height: 100vh;
       margin: 0;
       font-family: 'Press Start 2P', monospace;
-      background: #1a1a2e;
-      color: #fff;
+      /* Céu do Super Mario World */
+      background: linear-gradient(#5c94fc, #7db9ff 70%, #8fd3ff);
+      overflow-x: hidden;
     }
-    /* Céu pixelado com estrelas */
-    .stars {
+
+    /* ===== Cenário (nuvens e morros pixelados) ===== */
+    .cloud {
       position: fixed;
-      inset: 0;
-      background-image:
-        radial-gradient(#fff 1px, transparent 1px),
-        radial-gradient(#fff 1px, transparent 1px);
-      background-size: 60px 60px, 90px 90px;
-      background-position: 10px 20px, 40px 60px;
-      opacity: 0.4;
+      background: #fff;
+      box-shadow: none;
+      border: 3px solid #1a1acc;
+      z-index: 0;
       pointer-events: none;
     }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: #fff;
+      border: 3px solid #1a1acc;
+    }
+    .cloud::before {
+      width: 30px; height: 30px;
+      top: -30px; left: 10px;
+      border-bottom: none;
+    }
+    .cloud::after {
+      width: 30px; height: 30px;
+      top: -30px; left: 40px;
+      border-bottom: none;
+      border-left: none;
+    }
+    .cloud-1 { top: 12%; left: 6%; width: 70px; height: 25px; animation: drift 30s linear infinite; }
+    .cloud-2 { top: 28%; right: 8%; width: 70px; height: 25px; animation: drift 40s linear infinite reverse; }
+    .cloud-3 { bottom: 30%; left: 10%; width: 70px; height: 25px; opacity: .8; }
+
+    @keyframes drift {
+      from { transform: translateX(-15vw); }
+      to   { transform: translateX(115vw); }
+    }
+
+    .hill {
+      position: fixed;
+      bottom: 0;
+      width: 130px; height: 65px;
+      background: #00a800;
+      border-radius: 65px 65px 0 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hill-1 { left: -30px; }
+    .hill-2 { right: -40px; width: 170px; height: 85px; }
+    /* "Chão" de tijolos */
+    .ground {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 34px;
+      background:
+        repeating-linear-gradient(0deg, #c84c0c 0 16px, #e45c10 16px 32px),
+        linear-gradient(#e45c10, #e45c10);
+      border-top: 4px solid #000;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* ===== Card estilo caixa "?" ===== */
     .login-box {
       position: relative;
-      background: #16213e;
-      border: 4px solid #fff;
+      z-index: 3;
+      background: #d8a038;
+      border: 4px solid #000;
       box-shadow:
-        0 0 0 4px #16213e,
-        0 0 0 8px #e94560;
+        inset 4px 4px 0 #fcd8a8,
+        inset -4px -4px 0 #a05008;
       padding: 40px 32px;
-      width: min(90vw, 420px);
+      width: min(92vw, 420px);
       text-align: center;
+      margin-bottom: 108px;
     }
+    /* Rebites/dourados nos cantos estilo bloco */
+    .login-box::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle 3px at 4px 4px, #fff 2px, transparent 2px),
+        radial-gradient(circle 3px at calc(100% - 4px) 4px, #fff 2px, transparent 2px),
+        radial-gradient(circle 3px at 4px calc(100% - 4px), #fff 2px, transparent 2px),
+        radial-gradient(circle 3px at calc(100% - 4px) calc(100% - 4px), #fff 2px, transparent 2px);
+    }
+
     .login-box h1 {
-      font-size: 24px;
-      color: #ffd700;
-      text-shadow: 3px 3px 0 #e94560;
-      margin: 0 0 8px;
-      line-height: 1.4;
+      font-size: 22px;
+      color: #fff;
+      text-shadow:
+        3px 3px 0 #a05008,
+        5px 5px 0 #000;
+      margin: 0 0 10px;
+      letter-spacing: 2px;
     }
     .login-box p {
       font-size: 8px;
-      color: #8ecae6;
-      margin: 0 0 32px;
+      color: #7a3c04;
+      margin: 0 0 28px;
     }
+
     label {
       display: block;
       text-align: left;
       font-size: 9px;
-      color: #ffd700;
+      color: #fff;
+      text-shadow: 2px 2px 0 #a05008;
       margin: 0 0 6px 14px;
     }
     input {
       width: 100%;
       padding: 14px;
-      margin: 0 0 24px;
+      margin: 0 0 22px;
       font-family: 'Press Start 2P', monospace;
       font-size: 10px;
-      color: #fff;
-      background: #0f3460;
-      border: 3px solid #8ecae6;
+      color: #000;
+      background: #f8f8f8;
+      border: 3px solid #000;
+      box-shadow: inset 3px 3px 0 #b0b0b0;
       outline: none;
       border-radius: 0;
     }
-    input::placeholder {
-      color: #4f77aa;
-    }
-    input:focus {
-      border-color: #ffd700;
-    }
+    input::placeholder { color: #9a9a9a; }
+    input:focus { background: #fff; border-color: #e52521; }
+
     button {
       width: 100%;
       padding: 16px;
       font-family: 'Press Start 2P', monospace;
       font-size: 12px;
-      color: #1a1a2e;
-      background: #ffd700;
-      border: none;
-      box-shadow: 0 4px 0 #b8860b;
+      color: #fff;
+      background: #43b047;
+      border: 4px solid #000;
+      box-shadow:
+        inset 4px 4px 0 #8ee48e,
+        inset -4px -4px 0 #1f7a22,
+        0 5px 0 #000;
       cursor: pointer;
       transition: transform 0.05s;
       border-radius: 0;
+      text-shadow: 2px 2px 0 #1f7a22;
     }
-    button:hover {
-      background: #ffe55c;
-    }
+    button:hover { background: #55cc58; }
     button:active {
-      transform: translateY(4px);
-      box-shadow: 0 0 0 #b8860b;
+      transform: translateY(5px);
+      box-shadow:
+        inset 4px 4px 0 #8ee48e,
+        inset -4px -4px 0 #1f7a22,
+        0 0 0 #000;
     }
-    .coin {
-      font-size: 28px;
-      margin-bottom: 16px;
-      display: inline-block;
-      animation: jump 1s steps(2) infinite;
+
+    /* Mario pulando no topo do card */
+    .mario {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      margin-left: -24px;
+      font-size: 40px;
+      animation: mario-jump 1.2s steps(2) infinite;
     }
-    @keyframes jump {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    @keyframes mario-jump {
+      0%, 100% { transform: translateY(0) scaleX(1); }
+      50%      { transform: translateY(-24px) scale(0.95); }
     }
   </style>
 </head>
 <body>
-  <div class="stars"></div>
+  <!-- Cenário -->
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="hill hill-1"></div>
+  <div class="hill hill-2"></div>
+  <div class="ground"></div>
+
+  <!-- Formulário -->
   <div class="login-box">
-    <span class="coin">🪙</span>
-    <h1>LOGIN</h1>
-    <p>Pressione START para continuar</p>
+    <span class="mario">🍄</span>
+    <h1>SUPER LOGIN</h1>
+    <p>World 1-1 — Entre na fase!</p>
     <form>
       <label for="email">E-MAIL</label>
       <input type="email" id="email" name="email" placeholder="SEU@EMAIL.COM" required>
@@ -127,7 +211,7 @@
       <label for="senha">SENHA</label>
       <input type="password" id="senha" name="senha" placeholder="••••••••" required>
 
-      <button type="submit">► ENTRAR</button>
+      <button type="submit">► START!</button>
     </form>
   </div>
 </body>
